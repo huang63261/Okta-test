@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         // \App\Models\Post::factory(10)->create();
 
         \App\Models\User::factory()->create([
+            'okta_user_id' => 'p0126',
             'chinese_name' => '黃靖凱',
             'first_name' => 'Harvey',
             'last_name' => 'Huang',
