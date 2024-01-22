@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Throwable;
@@ -22,11 +23,11 @@ class PostController extends Controller
     {
         $posts = Post::get();
 
-        if(isset($posts) && count($posts) > 0){
+        if (isset($posts) && count($posts) > 0) {
             $data = ['posts' => $posts];
-            return $this->makeJson(1,$data,null);
-        }else{
-            return $this->makeJson(0,null,'找不到任何文章');
+            return $this->makeJson(1, $data, null);
+        } else {
+            return $this->makeJson(0, null, '找不到任何文章');
         }
     }
 
@@ -35,16 +36,16 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        $input = ['title' => $request->title , 'content' => $request->content];
+        $input = ['title' => $request->title, 'content' => $request->content];
 
         $post = Post::create($input);
 
-        if(isset($post)){
+        if (isset($post)) {
             $data = ['post' => $post];
-            return $this->makeJson(1,$data,'新增文章成功');
-        }else{
+            return $this->makeJson(1, $data, '新增文章成功');
+        } else {
             $data = ['post' => $post];
-            return $this->makeJson(0,null,'新增文章失敗');
+            return $this->makeJson(0, null, '新增文章失敗');
         }
     }
 
@@ -55,11 +56,11 @@ class PostController extends Controller
     {
         $post = Post::find($id);
 
-        if(isset($post)){
+        if (isset($post)) {
             $data = ['post' => $post];
-            return $this->makeJson(1,$data,null);
-        }else{
-            return $this->makeJson(0,null,'找不到該文章');
+            return $this->makeJson(1, $data, null);
+        } else {
+            return $this->makeJson(0, null, '找不到該文章');
         }
     }
 
@@ -76,11 +77,11 @@ class PostController extends Controller
         } catch (Throwable $e) {
             //更新失敗
             $data = ['post' => $post];
-            return $this->makeJson(0,null,'更新文章失敗');
+            return $this->makeJson(0, null, '更新文章失敗');
         }
 
         $data = ['post' => $post];
-        return $this->makeJson(1,$data,'更新文章成功');
+        return $this->makeJson(1, $data, '更新文章成功');
     }
 
     /**
@@ -93,8 +94,8 @@ class PostController extends Controller
             $post->delete();
         } catch (Throwable $e) {
             //刪除失敗
-            return $this->makeJson(0,null,'刪除文章失敗');
+            return $this->makeJson(0, null, '刪除文章失敗');
         }
-        return $this->makeJson(1,null,'刪除文章成功');
+        return $this->makeJson(1, null, '刪除文章成功');
     }
 }

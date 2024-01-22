@@ -7,8 +7,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -42,4 +43,35 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    /**
+     * 取得 JWT 辨識字串
+     *
+     * @return mixed
+     */
+    public function getJWTIdentifier()
+    {
+        return $this->getKey();
+        // return 'hrm_id';
+    }
+
+    /**
+     * 回傳鍵值對陣列，內容包含被加入 JWT 的自定義 Payload
+     *
+     * @return array
+     */
+    public function getJWTCustomClaims()
+    {
+        return [];
+    }
+
+    // /**
+    //  * Get the name of the unique identifier for the user.
+    //  *
+    //  * @return string
+    //  */
+    // public function getAuthIdentifierName()
+    // {
+    //     return 'hrm_id';
+    // }
 }
